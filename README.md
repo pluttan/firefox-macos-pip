@@ -4,6 +4,8 @@ MVP for sending a Firefox page video into a native macOS always-on-top window wi
 
 This project is released under the MIT License.
 
+Landing page: https://pluttan.github.io/firefox-macos-pip/
+
 ## Plan
 
 1. Firefox extension finds the best `<video>` element on the current tab.

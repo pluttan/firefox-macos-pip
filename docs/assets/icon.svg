@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="macOS External PiP Bridge">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="16" x2="110" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a1d24"/>
+      <stop offset="1" stop-color="#050609"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="32" y1="34" x2="98" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#35c2ff"/>
+      <stop offset="1" stop-color="#3ddc84"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="url(#bg)"/>
+  <rect x="22" y="28" width="84" height="56" rx="10" fill="#10131a" stroke="#ffffff" stroke-opacity=".22" stroke-width="4"/>
+  <path d="M50 44v24l23-12z" fill="url(#screen)"/>
+  <rect x="62" y="62" width="44" height="34" rx="8" fill="#0b0d12" stroke="#ffffff" stroke-opacity=".78" stroke-width="4"/>
+  <rect x="70" y="70" width="28" height="18" rx="4" fill="url(#screen)"/>
+  <path d="M37 98h38" stroke="#ffffff" stroke-opacity=".42" stroke-width="6" stroke-linecap="round"/>
+</svg>

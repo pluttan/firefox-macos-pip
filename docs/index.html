@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Send Firefox video playback to a local always-on-top macOS Picture-in-Picture helper window.">
+    <title>macOS External PiP Bridge</title>
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="macOS External PiP Bridge home">
+        <img src="./assets/icon.svg" alt="" width="32" height="32">
+        <span>macOS External PiP Bridge</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a href="#privacy">Privacy</a>
+        <a href="https://github.com/pluttan/firefox-macos-pip">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Firefox add-on + local macOS helper</p>
+          <h1>Firefox video in a native always-on-top macOS window.</h1>
+          <p class="lead">Open a video in Firefox, click the extension button, and keep the video floating while you work in other apps.</p>
+          <div class="actions" aria-label="Primary actions">
+            <a class="button primary" href="https://addons.mozilla.org/firefox/addon/macos-external-pip-bridge/">Install Firefox Add-on</a>
+            <a class="button secondary" href="https://github.com/pluttan/firefox-macos-pip/releases/tag/v0.1.0-beta">Download Helper</a>
+          </div>
+          <p class="small-note">Beta for macOS. The helper is free, ad-hoc signed, and not Apple-notarized yet.</p>
+        </div>
+
+        <div class="product-visual" aria-label="Diagram showing Firefox video sent to a floating macOS PiP helper">
+          <div class="browser-window">
+            <div class="traffic-lights" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="address-bar">firefox.example/video</div>
+            <div class="video-area">
+              <div class="play-triangle"></div>
+              <div class="video-caption">HTML5 video</div>
+            </div>
+            <div class="toolbar-chip">
+              <img src="./assets/icon.svg" alt="" width="20" height="20">
+              Extension button
+            </div>
+          </div>
+          <div class="connection-line">
+            <span>127.0.0.1:41243</span>
+          </div>
+          <div class="pip-window">
+            <div class="pip-video">
+              <div class="pip-play"></div>
+            </div>
+            <div class="pip-controls" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2>Nothing is uploaded. The bridge stays on your Mac.</h2>
+        </div>
+        <div class="flow">
+          <article class="flow-card">
+            <span class="step-number">1</span>
+            <h3>Click the add-on</h3>
+            <p>The Firefox extension looks through the active tab and embedded frames to find the best HTML5 video.</p>
+          </article>
+          <article class="flow-card">
+            <span class="step-number">2</span>
+            <h3>Send to localhost</h3>
+            <p>It connects to the helper over a local WebSocket on <code>127.0.0.1:41243</code>.</p>
+          </article>
+          <article class="flow-card">
+            <span class="step-number">3</span>
+            <h3>Play in helper</h3>
+            <p>The helper opens a small always-on-top macOS window and keeps playback controls synced with Firefox.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Two playback paths</p>
+          <h2>Direct media first, fallback stream if needed.</h2>
+        </div>
+        <div class="mode-list">
+          <article>
+            <h3>Direct mode</h3>
+            <p>If Firefox sees a playable media URL, the helper plays that media itself. This keeps Firefox from capturing and re-encoding frames.</p>
+          </article>
+          <article>
+            <h3>Fallback mode</h3>
+            <p>If no direct URL works, the extension can use <code>video.captureStream()</code> and <code>MediaRecorder</code> to send encoded WebM chunks locally.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="install" class="section install-section">
+        <div class="section-heading">
+          <p class="eyebrow">Install</p>
+          <h2>Install the add-on, then start the macOS helper.</h2>
+        </div>
+        <div class="install-grid">
+          <article class="install-card">
+            <h3>1. Install the Firefox add-on</h3>
+            <p>Install from Mozilla Add-ons. If the listing is still under review, check the GitHub release notes.</p>
+            <a class="text-link" href="https://addons.mozilla.org/firefox/addon/macos-external-pip-bridge/">Open AMO listing</a>
+          </article>
+          <article class="install-card">
+            <h3>2. Download the helper</h3>
+            <p>Choose the build for your Mac, unzip it, and move the app to <code>/Applications</code>.</p>
+            <div class="download-row">
+              <a class="button compact" href="https://github.com/pluttan/firefox-macos-pip/releases/download/v0.1.0-beta/macOS.External.PiP.Helper-0.1.0-arm64.zip">Apple Silicon</a>
+              <a class="button compact" href="https://github.com/pluttan/firefox-macos-pip/releases/download/v0.1.0-beta/macOS.External.PiP.Helper-0.1.0-x64.zip">Intel Mac</a>
+            </div>
+          </article>
+          <article class="install-card">
+            <h3>3. Open the helper</h3>
+            <p>Right-click the helper app and choose <strong>Open</strong>. macOS may warn because this beta is not notarized.</p>
+            <a class="text-link" href="https://github.com/pluttan/firefox-macos-pip/releases/tag/v0.1.0-beta">View release</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="privacy" class="section privacy-band">
+        <div>
+          <p class="eyebrow">Privacy</p>
+          <h2>Local by design.</h2>
+        </div>
+        <p>The extension does not use analytics, advertising, tracking, or a remote server. Video URLs, playback state, and fallback media chunks are sent only to the helper on your own Mac.</p>
+      </section>
+
+      <section class="section limits">
+        <div class="section-heading">
+          <p class="eyebrow">Current limits</p>
+          <h2>Beta means some videos will not work yet.</h2>
+        </div>
+        <ul>
+          <li>DRM and protected media are not supported.</li>
+          <li>Some cross-origin or MSE players may not expose usable media.</li>
+          <li>The fallback stream can have a small delay.</li>
+          <li>This is not Apple's system Picture-in-Picture API; it is a native always-on-top helper window.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>macOS External PiP Bridge</span>
+      <a href="https://github.com/pluttan/firefox-macos-pip">Source</a>
+      <a href="https://github.com/pluttan/firefox-macos-pip/releases/tag/v0.1.0-beta">Helper downloads</a>
+      <a href="https://github.com/pluttan/firefox-macos-pip/blob/main/PRIVACY.md">Privacy</a>
+    </footer>
+  </body>
+</html>

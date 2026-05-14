@@ -6,6 +6,9 @@ const MAX_MEDIA_ITEMS = 30;
 const MAX_DEBUG_ITEMS = 80;
 const DIRECT_MEDIA_WAIT_MS = 3000;
 const DIRECT_MEDIA_POLL_MS = 150;
+const HELPER_SETUP_PAGE = "helper-setup.html";
+
+let helperSetupTabId = null;
 
 function rememberMediaRequest(details) {
   if (details.tabId < 0 || !details.url) {
@@ -119,6 +122,26 @@ async function showErrorInReachableFrame(tabId, reports, message) {
   return false;
 }
 
+async function openHelperSetupPage() {
+  const url = browser.runtime.getURL(HELPER_SETUP_PAGE);
+
+  if (typeof helperSetupTabId === "number") {
+    try {
+      const tab = await browser.tabs.get(helperSetupTabId);
+      await browser.tabs.update(tab.id, { active: true, url });
+      if (typeof tab.windowId === "number") {
+        await browser.windows.update(tab.windowId, { focused: true });
+      }
+      return;
+    } catch (_error) {
+      helperSetupTabId = null;
+    }
+  }
+
+  const tab = await browser.tabs.create({ url });
+  helperSetupTabId = typeof tab.id === "number" ? tab.id : null;
+}
+
 function scoreFrame(report) {
   if (!report?.ok) {
     return -1;
@@ -178,6 +201,11 @@ browser.browserAction.onClicked.addListener(async (tab) => {
 });
 
 browser.runtime.onMessage.addListener(async (message, sender) => {
+  if (message.type === "OPEN_EXTERNAL_PIP_HELPER_SETUP") {
+    await openHelperSetupPage();
+    return undefined;
+  }
+
   if (message.type === "GET_DIRECT_MEDIA" && sender.tab?.id) {
     return getBestDirectMedia(sender.tab.id);
   }

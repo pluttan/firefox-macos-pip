@@ -27,12 +27,12 @@
         <div class="hero-copy">
           <p class="eyebrow">Firefox add-on + local macOS helper</p>
           <h1>Firefox video in a native always-on-top macOS window.</h1>
-          <p class="lead">Open a video in Firefox, click the extension button, and keep the video floating while you work in other apps.</p>
+          <p class="lead">Install both parts: the Firefox add-on and the macOS helper. Then open a video, click the extension button, and keep the video floating while you work in other apps.</p>
           <div class="actions" aria-label="Primary actions">
             <a class="button primary" href="https://addons.mozilla.org/firefox/addon/macos-external-pip-bridge/">Install Firefox Add-on</a>
             <a class="button secondary" href="https://github.com/pluttan/firefox-macos-pip/releases/tag/v0.1.0-beta">Download Helper</a>
           </div>
-          <p class="small-note">Beta for macOS. The helper is free, ad-hoc signed, and not Apple-notarized yet.</p>
+          <p class="small-note">Both downloads are required. Beta for macOS. The helper is free, ad-hoc signed, and not Apple-notarized yet.</p>
         </div>
 
         <div class="product-visual" aria-label="Diagram showing Firefox video sent to a floating macOS PiP helper">
@@ -42,6 +42,7 @@
             </div>
             <div class="address-bar">firefox.example/video</div>
             <div class="video-area">
+              <img class="video-photo" src="./assets/video-preview.jpg" alt="">
               <div class="play-triangle"></div>
               <div class="video-caption">HTML5 video</div>
             </div>
@@ -51,7 +52,7 @@
             </div>
           </div>
           <div class="connection-line">
-            <span>127.0.0.1:41243</span>
+            <span>local bridge</span>
           </div>
           <div class="pip-window">
             <div class="pip-video">
@@ -77,8 +78,8 @@
           </article>
           <article class="flow-card">
             <span class="step-number">2</span>
-            <h3>Send to localhost</h3>
-            <p>It connects to the helper over a local WebSocket on <code>127.0.0.1:41243</code>.</p>
+            <h3>Send locally</h3>
+            <p>It connects to the helper app running on your Mac. The video data stays on your computer.</p>
           </article>
           <article class="flow-card">
             <span class="step-number">3</span>
@@ -108,17 +109,17 @@
       <section id="install" class="section install-section">
         <div class="section-heading">
           <p class="eyebrow">Install</p>
-          <h2>Install the add-on, then start the macOS helper.</h2>
+          <h2>You need the Firefox add-on and the macOS helper.</h2>
         </div>
         <div class="install-grid">
           <article class="install-card">
             <h3>1. Install the Firefox add-on</h3>
-            <p>Install from Mozilla Add-ons. If the listing is still under review, check the GitHub release notes.</p>
+            <p>Install the browser button from Mozilla Add-ons. If the listing is still under review, check the GitHub release notes.</p>
             <a class="text-link" href="https://addons.mozilla.org/firefox/addon/macos-external-pip-bridge/">Open AMO listing</a>
           </article>
           <article class="install-card">
             <h3>2. Download the helper</h3>
-            <p>Choose the build for your Mac, unzip it, and move the app to <code>/Applications</code>.</p>
+            <p>Choose the build for your Mac, unzip it, and move the helper app to <code>/Applications</code>.</p>
             <div class="download-row">
               <a class="button compact" href="https://github.com/pluttan/firefox-macos-pip/releases/download/v0.1.0-beta/macOS.External.PiP.Helper-0.1.0-arm64.zip">Apple Silicon</a>
               <a class="button compact" href="https://github.com/pluttan/firefox-macos-pip/releases/download/v0.1.0-beta/macOS.External.PiP.Helper-0.1.0-x64.zip">Intel Mac</a>

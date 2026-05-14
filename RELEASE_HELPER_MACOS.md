@@ -29,13 +29,7 @@ dist/helper/macOS External PiP Helper-0.1.0-x64.zip
 1. Unzip the helper artifact.
 2. Move the app to `/Applications`.
 3. Right-click the app and choose **Open**.
-4. Confirm it listens on localhost:
-
-```bash
-lsof -nP -iTCP:41243 -sTCP:LISTEN
-```
-
-5. Open Firefox, play an HTML5 video, and click the extension toolbar button.
+4. Open Firefox, play an HTML5 video, and click the extension toolbar button.
 
 ## Release Notes Template
 

@@ -474,7 +474,8 @@ async function startSession() {
   };
 
   ws.onerror = () => {
-    showToast("PiP helper is not running on 127.0.0.1:41243. Start the helper daemon first.");
+    showToast("PiP helper app is not running. Opening setup instructions.");
+    browser.runtime.sendMessage({ type: "OPEN_EXTERNAL_PIP_HELPER_SETUP" }).catch(() => {});
   };
 
   ws.onclose = () => {

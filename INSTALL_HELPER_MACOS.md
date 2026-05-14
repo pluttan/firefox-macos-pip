@@ -14,21 +14,13 @@ This beta helper is free and ad-hoc signed, but it is not notarized with Apple D
 4. Right-click the app and choose **Open**.
 5. Confirm **Open** in the macOS security dialog.
 
-After the helper starts, it runs as a small local daemon and listens only on:
-
-```text
-127.0.0.1:41243
-```
+After the helper starts, it runs as a small local daemon on your Mac.
 
 The PiP window opens only when the Firefox extension sends a video to it.
 
 ## Check That It Is Running
 
-```bash
-lsof -nP -iTCP:41243 -sTCP:LISTEN
-```
-
-Expected output includes `Electron` listening on `127.0.0.1:41243`.
+Open the helper app. It does not show a window until the Firefox add-on sends a video to it.
 
 ## Stop The Helper
 

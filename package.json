@@ -1,6 +1,6 @@
 {
   "name": "firefox-macos-pip",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Firefox extension and macOS helper for external Picture-in-Picture playback.",
   "scripts": {

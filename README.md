@@ -10,7 +10,7 @@ Landing page: https://pluttan.github.io/firefox-macos-pip/
 
 1. Firefox extension finds the best `<video>` element on the current tab.
 2. The background script watches media requests and prefers a directly playable media URL (`.m3u8`, `.mp4`, etc.).
-3. The extension opens a local WebSocket control channel on `127.0.0.1:41243` and sends the direct media URL to the helper.
+3. The extension opens a local control channel on the same Mac and sends the direct media URL to the helper.
 4. The helper plays direct media itself, so Firefox does not need to decode, capture, encode, and send frames in this mode.
 5. If direct media cannot be found or cannot play, the extension lazily falls back to `video.captureStream()` + `MediaRecorder` WebM chunks over the same local WebSocket.
 6. The source page video is hidden and gets a small "streaming to PiP" return button while the helper plays the synced audio/video stream.

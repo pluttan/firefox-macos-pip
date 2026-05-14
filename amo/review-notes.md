@@ -1,16 +1,16 @@
 Reviewer notes for AMO
 ======================
 
-This add-on requires a separate local macOS helper app. The helper listens only on `127.0.0.1:41243` and is not bundled into the Firefox extension.
+This add-on requires a separate local macOS helper app. The helper accepts only local connections from the same Mac and is not bundled into the Firefox extension.
 
 User flow:
 
 1. The user starts the macOS helper app.
 2. The user opens a page with an HTML5 `<video>`.
 3. The user clicks the toolbar button.
-4. The extension probes frames in the active tab, chooses the best video element, and connects to `ws://127.0.0.1:41243/signaling`.
+4. The extension probes frames in the active tab, chooses the best video element, and connects to the local helper's WebSocket control channel.
 5. If the page exposed a direct playable media URL, the extension sends that URL and limited request headers (`Origin`, `Referer`, `Range`) to the local helper.
-6. If no direct URL is available, the extension uses `video.captureStream()` and `MediaRecorder` to send WebM chunks to the local helper over the same localhost WebSocket.
+6. If no direct URL is available, the extension uses `video.captureStream()` and `MediaRecorder` to send WebM chunks to the local helper over the same local WebSocket.
 
 Why broad permissions are requested:
 
@@ -18,7 +18,7 @@ Why broad permissions are requested:
 - `webRequest` is used to identify direct media candidates such as HLS playlists and MP4/WebM URLs.
 - `webNavigation` is used to enumerate frames so the toolbar click can target the frame that actually contains the video.
 - `tabs` is used to return focus to the source tab when the helper window is closed.
-- `ws://127.0.0.1:41243/*` is used only for the local helper control/media channel.
+- the local helper WebSocket permission is used only for the helper control/media channel.
 
 Data handling:
 

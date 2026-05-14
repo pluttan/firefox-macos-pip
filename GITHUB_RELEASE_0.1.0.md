@@ -27,7 +27,7 @@ This beta helper is free and ad-hoc signed, but not notarized with Apple Develop
 
 ## Notes
 
-- The helper listens only on `127.0.0.1:41243`.
+- The helper accepts connections only from the local Firefox add-on on the same Mac.
 - No remote server, analytics, advertising, or tracking is used.
 - DRM/protected media and some cross-origin players may not work.
 - The fallback stream uses `video.captureStream()` and `MediaRecorder`, so it can have a small delay.

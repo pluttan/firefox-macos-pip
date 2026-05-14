@@ -12,8 +12,8 @@ https://addons.mozilla.org/firefox/addon/macos-external-pip-bridge/
 
 Download the companion macOS helper for your Mac:
 
-- Apple Silicon: `macOS External PiP Helper-0.1.0-arm64.zip`
-- Intel: `macOS External PiP Helper-0.1.0-x64.zip`
+- Apple Silicon: `macOS.External.PiP.Helper-0.1.0-arm64.zip`
+- Intel: `macOS.External.PiP.Helper-0.1.0-x64.zip`
 
 ## Install Helper
 

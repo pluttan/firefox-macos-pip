@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.DS_Store
+web-ext-artifacts/
+dist/
+helper/dist/
+helper/build/icon.icns

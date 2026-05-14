@@ -1,0 +1,65 @@
+{
+  "name": "firefox-macos-pip-helper",
+  "productName": "macOS External PiP Helper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local macOS always-on-top PiP helper for the Firefox extension.",
+  "main": "src/main.js",
+  "author": "Pluttan",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check public/renderer.js",
+    "icon:mac": "bash scripts/make-mac-icon.sh",
+    "pack:mac": "npm run icon:mac && electron-builder --mac zip --arm64 --x64 --publish=never"
+  },
+  "build": {
+    "appId": "local.pluttan.firefox-macos-pip-helper",
+    "productName": "macOS External PiP Helper",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "directories": {
+      "output": "../dist/helper"
+    },
+    "files": [
+      "src/**/*",
+      "public/**/*",
+      "package.json",
+      "node_modules/ws/**/*",
+      "node_modules/hls.js/package.json",
+      "node_modules/hls.js/dist/hls.min.js",
+      "!node_modules/hls.js/src/**/*",
+      "!node_modules/hls.js/dist/*.map",
+      "!node_modules/hls.js/dist/hls-demo.js",
+      "!node_modules/hls.js/dist/hls.js",
+      "!node_modules/hls.js/dist/hls.light.js",
+      "!node_modules/hls.js/dist/hls.light.min.js",
+      "!node_modules/hls.js/dist/hls.light.mjs",
+      "!node_modules/hls.js/dist/hls.mjs",
+      "!node_modules/hls.js/dist/hls.worker.js"
+    ],
+    "mac": {
+      "category": "public.app-category.video",
+      "icon": "build/icon.icns",
+      "target": [
+        "zip"
+      ],
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "identity": "-",
+      "extendInfo": {
+        "NSCameraUsageDescription": "This helper does not use camera access.",
+        "NSMicrophoneUsageDescription": "This helper does not use microphone access.",
+        "NSBluetoothAlwaysUsageDescription": "This helper does not use Bluetooth access.",
+        "NSBluetoothPeripheralUsageDescription": "This helper does not use Bluetooth access."
+      }
+    }
+  },
+  "dependencies": {
+    "hls.js": "^1.6.16",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.8.1"
+  }
+}

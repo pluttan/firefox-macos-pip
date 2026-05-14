@@ -1,0 +1,19 @@
+{
+  "name": "firefox-macos-pip",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Firefox extension and macOS helper for external Picture-in-Picture playback.",
+  "scripts": {
+    "check": "npm run firefox:lint && npm --prefix helper run check",
+    "firefox:lint": "web-ext lint",
+    "firefox:build": "web-ext build",
+    "firefox:run": "web-ext run",
+    "firefox:sign:listed": "web-ext sign --channel=listed --amo-metadata=amo/metadata.json",
+    "firefox:sign:unlisted": "web-ext sign --channel=unlisted",
+    "helper:pack:mac": "npm --prefix helper run pack:mac",
+    "release:local": "npm run check && npm run firefox:build && npm run helper:pack:mac"
+  },
+  "devDependencies": {
+    "web-ext": "^10.1.0"
+  }
+}

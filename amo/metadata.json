@@ -1,0 +1,31 @@
+{
+  "name": {
+    "en-US": "macOS External PiP Bridge"
+  },
+  "summary": {
+    "en-US": "Send the current page video to a local always-on-top macOS PiP helper window."
+  },
+  "description": {
+    "en-US": "macOS External PiP Bridge connects Firefox video playback to a local helper application running on your Mac. When you click the toolbar button, the extension finds the best video on the active tab and sends either a direct media URL or a fallback encoded media stream to 127.0.0.1:41243. The helper displays the video in a small always-on-top window.\n\nThis add-on does not use a remote server, analytics, advertising, or tracking. The companion macOS helper must be installed and running separately."
+  },
+  "categories": [
+    "photos-music-videos"
+  ],
+  "default_locale": "en-US",
+  "is_experimental": true,
+  "requires_payment": false,
+  "slug": "macos-external-pip-bridge",
+  "tags": [
+    "video",
+    "picture-in-picture",
+    "macos",
+    "pip"
+  ],
+  "version": {
+    "license": "MIT",
+    "approval_notes": "This add-on requires a separate local macOS helper app. The helper listens on 127.0.0.1:41243 and receives video data only after the user clicks the toolbar button. Direct mode sends a playable media URL and limited request headers to localhost; fallback mode sends MediaRecorder WebM chunks to localhost. No remote server, analytics, advertising, or tracking are used. See the repository files amo/review-notes.md and PRIVACY.md for the full reviewer notes and privacy policy.",
+    "release_notes": {
+      "en-US": "Initial beta release for sending Firefox page video to a local macOS always-on-top PiP helper."
+    }
+  }
+}

@@ -1,14 +1,9 @@
-![Header](header.png)
-
 <div align="center">
 
 # Firefox macOS External PiP
 
 **Нативное поверх-всех-окон Picture-in-Picture для Firefox на macOS**
 
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Firefox](https://img.shields.io/badge/firefox-extension-2C2C2C?style=for-the-badge&logo=firefox&labelColor=1E1E1E)]()
-[![Electron](https://img.shields.io/badge/electron-helper-2C2C2C?style=for-the-badge&logo=electron&labelColor=1E1E1E)]()
 
 </div>
 
@@ -37,7 +32,26 @@
 
 </div>
 
-## ■ Запуск
+## ■ Как это работает
+
+```
+1. Расширение перехватывает сетевые запросы через webRequest и ищет прямые медиа-URL (.m3u8, .mp4, .webm, .m4v).
+2. При запуске PiP расширение проверяет каждый iframe и оценивает кандидатов для нахождения лучшего воспроизводимого элемента <video>.
+3. Если прямой URL был перехвачен, вспомогательное приложение Electron воспроизводит его нативно (HLS через hls.js); иначе captureStream() + MediaRecorder передаёт куски WebM через локальный WebSocket (ws://127.0.0.1:41243/signaling) в буфер MediaSource.
+4. Вспомогательное приложение открывает безрамочное окно поверх всех с элементами управления воспроизведением; play/pause, перемотка, текущее время и скорость воспроизведения зеркалируются обратно в исходную вкладку в реальном времени.
+```
+
+## ■ Скриншоты
+
+<div align="center">
+
+![Screenshot](screenshots/main.png)
+
+*Главное окно PiP с элементами управления воспроизведением поверх других приложений*
+
+</div>
+
+## ■ Использование
 
 ```bash
 # Install deps and run the Electron helper app
@@ -53,16 +67,6 @@ npm run release:local
 
 Загрузите расширение через `about:debugging#/runtime/this-firefox` > Load Temporary Add-on > выберите `extension/manifest.json`.
 
-## ■ Скриншоты
-
-<div align="center">
-
-![Screenshot](screenshots/main.png)
-
-*Главное окно PiP с элементами управления воспроизведением поверх других приложений*
-
-</div>
-
-## ■ License
+## ■ Лицензия
 
 MIT © [pluttan](https://github.com/pluttan)

@@ -1,92 +1,72 @@
+<div align="center">
+
 # Firefox macOS External PiP
 
-MVP for sending a Firefox page video into a native macOS always-on-top window without screen recording.
+**Native always-on-top Picture-in-Picture for Firefox on macOS**
 
-This project is released under the MIT License.
 
-Landing page: https://pluttan.github.io/firefox-macos-pip/
+</div>
 
-## Plan
+Firefox extension paired with an Electron helper app that streams page video into an always-on-top window on macOS — no screen recording required. Prefers direct media URLs for zero-overhead playback, falls back to `captureStream()` + `MediaRecorder` over a local WebSocket for universal compatibility.
 
-1. Firefox extension finds the best `<video>` element on the current tab.
-2. The background script watches media requests and prefers a directly playable media URL (`.m3u8`, `.mp4`, etc.).
-3. The extension opens a local control channel on the same Mac and sends the direct media URL to the helper.
-4. The helper plays direct media itself, so Firefox does not need to decode, capture, encode, and send frames in this mode.
-5. If direct media cannot be found or cannot play, the extension lazily falls back to `video.captureStream()` + `MediaRecorder` WebM chunks over the same local WebSocket.
-6. The source page video is hidden and gets a small "streaming to PiP" return button while the helper plays the synced audio/video stream.
+## ■ Features
 
-## Run
+- ❖ **Direct media playback** — sniffs `.m3u8`/`.mp4`/`.webm`/`.m4v` URLs from `webRequest`, replays them natively in the helper; HLS streams go through `hls.js`
+- ❖ **Fallback streaming** — captures the source `<video>` via `captureStream()` and pumps `MediaRecorder` WebM chunks over a local WebSocket (`ws://127.0.0.1:41243/signaling`) into a `MediaSource` buffer
+- ❖ **Playback sync** — mirrors play/pause, seek, current time and playback rate between the source tab and the PiP window
+- ❖ **Always-on-top window** — frameless, draggable, resizable PiP surface that locks the source video aspect ratio and persists its position across launches
+- ❖ **Iframe support** — probes every frame and scores candidates to find the best playable `<video>`
+- ❖ **Playback controls** — icon buttons for play/pause, volume with a slider, pin/unpin, close, plus a seek/timeline bar; an overlay on the source page returns you to the tab
+- ❖ **AMO-ready** — includes metadata, privacy policy, and reviewer notes for Firefox Add-ons submission
 
-Install and start the helper:
+## ■ Stack
 
-```bash
-cd /Volumes/pr/pets/firefox-macos-pip/helper
-npm install
-npm start
+<div align="center">
+
+| Component | Technology |
+|-----------|------------|
+| Extension | WebExtensions API (Manifest v2) |
+| Helper | Electron, ws (WebSocket), hls.js |
+| Build | web-ext, electron-builder |
+| Platforms | Firefox 142+, macOS (arm64 + x64) |
+
+</div>
+
+## ■ How It Works
+
+```
+1. The extension intercepts network requests via webRequest and sniffs for direct media URLs (.m3u8, .mp4, .webm, .m4v).
+2. When PiP is triggered, the extension probes every iframe and scores candidates to find the best playable <video> element.
+3. If a direct URL was captured, the Electron helper plays it natively (HLS via hls.js); otherwise captureStream() + MediaRecorder streams WebM chunks over a local WebSocket (ws://127.0.0.1:41243/signaling) into a MediaSource buffer.
+4. The helper opens a frameless, always-on-top window with playback controls; play/pause, seek, current time, and playback rate are mirrored back to the source tab in real time.
 ```
 
-The helper acts like a local daemon: it keeps the WebSocket server running in the background and only opens the PiP window when the extension starts a stream.
-In the beta build, users start the helper manually before using the extension.
+## ■ Screenshots
 
-For user-facing helper install instructions, see `INSTALL_HELPER_MACOS.md`.
+<div align="center">
 
-Build a free unsigned helper zip for distribution:
+![Screenshot](screenshots/main.png)
 
-```bash
-cd /Volumes/pr/pets/firefox-macos-pip/helper
-npm run pack:mac
-```
+*Main PiP window with playback controls floating above other applications*
 
-The helper artifact is written to `dist/helper/`.
-Use `GITHUB_RELEASE_0.1.0.md` as the first GitHub Release body.
+</div>
 
-Load the extension in Firefox:
-
-1. Open `about:debugging#/runtime/this-firefox`.
-2. Click `Load Temporary Add-on...`.
-3. Select `/Volumes/pr/pets/firefox-macos-pip/extension/manifest.json`.
-4. Open a page with a normal HTML5 video.
-5. Click the extension toolbar button.
-
-After changing files in `extension/`, reload the temporary add-on from `about:debugging`.
-
-## Firefox release
-
-Firefox publication files live in:
-
-- `amo/metadata.json` for AMO listing metadata.
-- `amo/review-notes.md` for reviewer notes.
-- `PRIVACY.md` for the privacy policy.
-- `RELEASE_FIREFOX.md` for build and signing commands.
-- `RELEASE_HELPER_MACOS.md` for the companion macOS helper build.
-
-Validate and build the Firefox extension:
+## ■ Usage
 
 ```bash
+# Install deps and run the Electron helper app
+cd helper && npm install && npm start
+
+# Build the extension (web-ext)
 npm install
-npm run firefox:lint
 npm run firefox:build
+
+# Lint, build the extension, and pack the macOS helper in one step
+npm run release:local
 ```
 
-## Debug
+Load the extension via `about:debugging#/runtime/this-firefox` > Load Temporary Add-on > select `extension/manifest.json`.
 
-Helper log:
+## ■ License
 
-```bash
-tail -f "$HOME/Library/Application Support/firefox-macos-pip-helper/helper.log"
-```
-
-## Controls
-
-- Icon buttons control the original page player, return to the source tab, pin/unpin the PiP window, and close the stream.
-- The whole PiP surface is draggable except the buttons.
-- The PiP window keeps the source video's aspect ratio while resizing.
-
-## Current Limits
-
-- This is not true system `AVPictureInPictureController` yet. It is a native always-on-top helper window.
-- Direct media depends on the page exposing a playable media URL through normal network requests.
-- The fallback path needs the page video to expose `captureStream()` successfully.
-- Iframe players are supported by probing all frames and starting in the frame that contains the best `<video>` candidate.
-- DRM, protected video paths, and some MSE/cross-origin players may fail or produce no tracks.
-- Native Messaging is not used yet because it is bad for realtime media. WebSocket carries control messages and fallback encoded media chunks, so fallback mode can have a small delay.
+MIT © [pluttan](https://github.com/pluttan)
